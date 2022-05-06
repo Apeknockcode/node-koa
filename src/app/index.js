@@ -1,7 +1,9 @@
 const Koa = require('koa')
+const KoaBody=require('koa-body')
 const userRouter = require("../router/user.route")
 
 const app = new Koa()
+app.use(KoaBody())
 app.use(userRouter.routes())
 /**
  * router.allowedMethods()作用： 这是官方文档的推荐用法,我们可以 
