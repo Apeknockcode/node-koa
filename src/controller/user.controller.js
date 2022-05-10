@@ -22,9 +22,10 @@ class UserController {
     }
 
     async login(ctx, next) {
+        const { user_name, password } = ctx.request.body
         ctx.body = {
             code: 200,
-            message: "用户登录成功"
+            message: `${user_name} 登陆成功`
         }
     }
 }

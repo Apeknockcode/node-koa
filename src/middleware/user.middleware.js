@@ -5,7 +5,7 @@
 const bcrypt = require("bcryptjs")
 
 const { getUserInfo } = require('../service/user.service')
-const { userFormatError, userAlreadyExited, userRegisterError } = require('../constant/err.type')
+const { userFormatError, userAlreadyExited, userRegisterError, noExitedUserName, userLoginError, invalidPassWord } = require('../constant/err.type')
 
 const userValidator = async (ctx, next) => {
     const { user_name, password } = ctx.request.body
@@ -51,7 +51,7 @@ const verifyUser = async (ctx, next) => {
             console.error('用户名已经存在', { user_name })
             ctx.app.emit('error', userAlreadyExited, ctx)
             return
-        } 
+        }
     } catch (error) {
         console.error('用户注册错误', error)
         ctx.app.emit('error', userRegisterError, ctx)
@@ -67,8 +67,38 @@ const bcryptPassWord = async (ctx, next) => {
     ctx.request.body.password = hash
     await next()
 }
+
+// 验证登陆的中间件
+const verifyLogin = async (ctx, next) => {
+    // 判断用户是否存在
+    const { user_name, password } = ctx.request.body // 获取用户名和密码
+    try {
+        const res = await getUserInfo({ user_name })
+        if (!res) {
+            console.error('用户名不存在', { user_name })
+            ctx.app.emit('error', noExitedUserName, ctx)
+            return
+        }
+        // 比对用户密码是否匹配
+        // 解析密码   bcrypt.compareSync(${用户输入的密码}, ${数据库中的密码})
+        if (!bcrypt.compareSync(password, res.password)) {
+            console.error('用户名密码不匹配', { user_name })
+            ctx.app.emit("error", invalidPassWord, ctx)
+            return
+        }
+    } catch (error) {
+        console.error('用户名登陆错误', error)
+        ctx.app.emit('error', userLoginError, ctx)
+        return
+    }
+
+    
+
+    await next()
+}
 module.exports = {
     userValidator,
     verifyUser,
-    bcryptPassWord
+    bcryptPassWord,
+    verifyLogin
 }
