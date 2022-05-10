@@ -26,7 +26,7 @@ class UserService {
                 where: whereOpt
             }
         )
-
+        console.log('server', res)
         return res ? res.dataValues : null
     }
 }
