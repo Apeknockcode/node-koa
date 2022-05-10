@@ -1,6 +1,8 @@
+var jwt = require('jsonwebtoken');
 // 导入数据库 操作层
-const { createUser } = require('../service/user.service')
+const { createUser, getUserInfo } = require('../service/user.service')
 const { userRegisterError } = require('../constant/err.type')
+const { JWT_SECRET } = require('../config/config.default')
 class UserController {
     async register(ctx, next) {
         // 1.获取数据
@@ -23,10 +25,27 @@ class UserController {
 
     async login(ctx, next) {
         const { user_name, password } = ctx.request.body
-        ctx.body = {
-            code: 200,
-            message: `${user_name} 登陆成功`
+        /**
+         * 解释token（JWT => JSON web Token）
+         * 三个部分组成 
+         *   1.Header （头部）
+         *   2.Payload 负载）
+         *   3.Signature (签名)
+         * */
+        // 1.获取用户信息 （在token 的 Payload 中，需要记录ID user_name，is_admin）
+        try {
+            const { password, ...res } = await getUserInfo({ user_name })
+            ctx.body = {
+                code: 0,
+                message: `${user_name} 登陆成功`,
+                result: jwt.sign(res, JWT_SECRET, { expiresIn: '1d' })
+            }
+        } catch (error) {
+            console.log('用户登录失败', error)
+            return
         }
+
+
     }
 }
 
