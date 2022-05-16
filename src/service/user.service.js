@@ -2,6 +2,7 @@
 const User = require("../mode/user.model")
 
 class UserService {
+    
     async createUser(user_name, password) {
         //  插入数据
         // User.create({
@@ -28,6 +29,15 @@ class UserService {
         )
         console.log('server', res)
         return res ? res.dataValues : null
+    }
+
+    async updateById({ id, user_name, password, is_admin }) { 
+        const whereOpt = { id }
+        const newUser = {}
+        user_name && Object.assign(whereOpt, { user_name })
+        password && Object.assign(whereOpt, { password })
+        is_admin && Object.assign(whereOpt, { is_admin })
+
     }
 }
 

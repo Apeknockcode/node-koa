@@ -47,6 +47,17 @@ class UserController {
 
 
     }
+
+    async changePassWord(ctx, next) { 
+        // 获取数据
+        const id = ctx.state.user.id
+        const password = ctx.state.user.password
+        console.log("id", id)
+        console.log("password", password)
+        // 操锁数据库
+        // 返回结果
+        await next()
+    }
 }
 
 module.exports = new UserController()
