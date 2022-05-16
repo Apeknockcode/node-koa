@@ -14,10 +14,7 @@ const { auth}=require("../middleware/auth.middleware")
 router.post("/register", userValidator, verifyUser, bcryptPassWord, register)
 
 router.post("/login", userValidator, verifyLogin, login)
-router.patch("/", auth, bcryptPassWord, changePassWord, (ctx, next) => {
-   console.log('user',ctx.state.user)
-    ctx.body="修改密码成功"
- })
+router.patch("/", auth, bcryptPassWord, changePassWord)
 
 
 module.exports = router

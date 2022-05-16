@@ -2,7 +2,7 @@
 const User = require("../mode/user.model")
 
 class UserService {
-    
+
     async createUser(user_name, password) {
         //  插入数据
         // User.create({
@@ -27,17 +27,21 @@ class UserService {
                 where: whereOpt
             }
         )
-        console.log('server', res)
+        // console.log('server', res)
         return res ? res.dataValues : null
     }
-
-    async updateById({ id, user_name, password, is_admin }) { 
+    // 更新密码
+    async updateById({ id, user_name, password, is_admin }) {
         const whereOpt = { id }
         const newUser = {}
-        user_name && Object.assign(whereOpt, { user_name })
-        password && Object.assign(whereOpt, { password })
-        is_admin && Object.assign(whereOpt, { is_admin })
-
+        // console.log(id,password)
+        user_name && Object.assign(newUser, { user_name })
+        password && Object.assign(newUser, { password })
+        is_admin && Object.assign(newUser, { is_admin })
+        // console.log("newUser", newUser)
+        const res = await User.update(newUser, { where: whereOpt })
+        // console.log('res', res)
+        return res[0] > 0 ? true:false
     }
 }
 

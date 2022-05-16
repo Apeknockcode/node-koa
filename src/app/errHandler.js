@@ -12,8 +12,9 @@ module.exports = (err, ctx) => {
             break
         default:
             status = 500
-            
+
     }
     ctx.status = status
-    ctx.body=err
+    ctx.body = err
+    console.log("errHandle", err)
 }

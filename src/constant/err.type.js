@@ -40,5 +40,10 @@ module.exports = {
         code: '10102',
         message: '无效的Token',
         result:''
+    },
+    changePwsFails: {
+        code: '10007',
+        message: '修改密码失败',
+        result:''
     }
 }
