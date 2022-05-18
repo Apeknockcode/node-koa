@@ -1,9 +1,11 @@
 // 
 const { JWT_SECRET } = require('../config/config.default')
 const jwt = require('jsonwebtoken')
-const { tokenExpiredError, invalidToken } = require('../constant/err.type')
+const { tokenExpiredError, invalidToken, hasNotAdminPermission } = require('../constant/err.type')
+
+// 判断用Token 是否过期
 const auth = async (ctx, next) => {
-    const { authorization } = ctx.request.header
+    const { authorization= '' } = ctx.request.header
     const token = authorization.replace("Bearer", '')
     try {
         //  user 包含 payload的信息
@@ -19,10 +21,22 @@ const auth = async (ctx, next) => {
                 return ctx.app.emit("error", invalidToken, ctx)
         }
     }
-    // console.log('token', token)
+    await next()
+}
+
+// 判断用户有没有权限上传图片
+const hadAdminPermission = async (ctx, next) => {
+    
+    const { is_admin } = ctx.state.user
+    
+    if (!is_admin) {
+        console.error("该用户没有管理员权限", ctx.state.user)
+        return ctx.app.emit("error", hasNotAdminPermission, ctx)
+    }
 
     await next()
 }
 module.exports = {
-    auth
+    auth,
+    hadAdminPermission
 }

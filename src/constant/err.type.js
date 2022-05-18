@@ -34,16 +34,31 @@ module.exports = {
     tokenExpiredError: {
         code: '10101',
         message: "Token 已经过期",
-        result:''
+        result: ''
     },
     invalidToken: {
         code: '10102',
         message: '无效的Token',
-        result:''
+        result: ''
     },
     changePwsFails: {
         code: '10007',
         message: '修改密码失败',
+        result: ''
+    },
+    hasNotAdminPermission: {
+        cod: '10103',
+        message: "没有管理员权限",
+        result: ''
+    },
+    fileUploadError: {
+        code: "10201",
+        message: "商品图片上传失败",
+        result: ""
+    },
+    unSupportFileType: {
+        code: "10202",
+        message: "不支持的文件格式",
         result:''
     }
 }
