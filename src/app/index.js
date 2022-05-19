@@ -3,12 +3,13 @@ const Koa = require('koa')
 
 const KoaBody = require('koa-body')
 const Koastatic = require("koa-static")
+const parameter = require('koa-parameter');
 // const userRouter = require("../router/user.route")
 // const goodsRouter= require('../router/goods.route')
 const router= require("../router/index")
 const errHandler = require('./errHandler')
 const app = new Koa()
-console.log("__dirname",__dirname)
+
 app.use(KoaBody({
     multipart: true,
     formidable: {
@@ -19,6 +20,8 @@ app.use(KoaBody({
 }))
 
 app.use(Koastatic(path.join(__dirname, "../uploads")))
+app.use(parameter(app));
+
 app.use(router.routes())
 // app.user(goodsRouter.routes())
 /**

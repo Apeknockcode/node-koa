@@ -60,5 +60,15 @@ module.exports = {
         code: "10202",
         message: "不支持的文件格式",
         result:''
+    },
+    goodsFormatError: {
+        code: "10301",
+        message: "参数格式错误",
+        result:''
+    },
+    publishGoodsError: {
+        code: '100302',
+        message: '发布商品失败',
+        result:''
     }
 }
