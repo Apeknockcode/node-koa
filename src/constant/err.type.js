@@ -59,16 +59,31 @@ module.exports = {
     unSupportFileType: {
         code: "10202",
         message: "不支持的文件格式",
-        result:''
+        result: ''
     },
     goodsFormatError: {
         code: "10301",
         message: "参数格式错误",
-        result:''
+        result: ''
     },
     publishGoodsError: {
-        code: '100302',
+        code: '10302',
         message: '发布商品失败',
-        result:''
+        result: ''
+    },
+    hasGoodsExited: {
+        code: "10303",
+        message: "商品名称不可重复",
+        result: ''
+    },
+    createGoodsFail: {
+        code: '10304',
+        message: "创建商品失败",
+        result: ''
+    },
+    upDataFails: {
+        code: '10305',
+        message: "修改商品失败",
+        result: ''
     }
 }

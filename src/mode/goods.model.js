@@ -14,7 +14,7 @@ const Goods = sequelize.define("koa_goods", {
         comment: '商品名称' // 字段注释
     },
     goods_price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: false,
         defaultValue: 0, // 默认值
         comment: '商品价格'
@@ -33,6 +33,6 @@ const Goods = sequelize.define("koa_goods", {
 }, {
     timestamps: true,//在数据库中不会创建 createdAt 和 updatedAt 字段
 })
-// 强制 同步 模型同步
-// User.sync({ force: true })
+// 首先创建表的时候 去除注释 后续可以加上注释 强制 同步 模型同步
+// Goods.sync({ force: true })
 module.exports = Goods
