@@ -85,5 +85,10 @@ module.exports = {
         code: '10305',
         message: "修改商品失败",
         result: ''
+    },
+    removeGoodsState: {
+        code: "10306",
+        message: '删除商品失败',
+        result:''
     }
 }

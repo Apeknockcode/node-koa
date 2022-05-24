@@ -30,8 +30,10 @@ const Goods = sequelize.define("koa_goods", {
         allowNull: false,
         comment: "商品主图"
     }
+    
 }, {
     timestamps: true,//在数据库中不会创建 createdAt 和 updatedAt 字段
+    paranoid:true
 })
 // 首先创建表的时候 去除注释 后续可以加上注释 强制 同步 模型同步
 // Goods.sync({ force: true })
