@@ -90,5 +90,10 @@ module.exports = {
         code: "10306",
         message: '删除商品失败',
         result:''
+    },
+    InvalidID: {
+        code: "10307",
+        message: "商品id无效",
+        result:""
     }
 }
