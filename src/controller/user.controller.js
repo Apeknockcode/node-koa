@@ -33,7 +33,7 @@ class UserController {
          *   3.Signature (签名)
          * */
         // 1.获取用户信息 （在token 的 Payload 中，需要记录ID user_name，is_admin）
-        console.log('password', password)
+        // console.log('password', password)
         try {
             const { ...res } = await getUserInfo({ user_name })
             ctx.body = {

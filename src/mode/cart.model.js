@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../MySQL/seq")
 
+// 定义模型
 const Carts = sequelize.define("koa_carts", {
     goods_id: {
         type: DataTypes.INTEGER,
@@ -15,15 +16,19 @@ const Carts = sequelize.define("koa_carts", {
     number: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        comment: "数量"
+        defaultValue: 1,
+        comment: "商品数量"
     },
     select: {
         type: DataTypes.INTEGER,
+        defaultValue:1,
         allowNull: false,
         comment: "选中的状态 0 没有选中， 1 选中"
     },
 }, {
     timestamps: true,
 })
-Carts.sync({ force: true })
+// 同步数据 （建表） 第一次需要执行
+// Carts.sync({ force: true })
+// 导出数据mooing
 module.exports = Carts
