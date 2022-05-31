@@ -8,7 +8,7 @@ const { add, findAll, update } = require("../controller/car.controller")
 // 实例化router对象
 const router = new Router({ prefix: "/carts" })
 // 编写路有规则
-router.post("/", auth, validator({ goods_id: { type: "", required: true } }), isGoodsID, add)
+router.post("/", auth, validator({ goods_id: { type: "number", required: true } }), isGoodsID, add)
 
 // 获取购物车列表
 router.get("/list", auth, findAll)

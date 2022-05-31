@@ -48,7 +48,7 @@ class CartService {
             attributes: ['id', "number", "select"],
             offset: offset,
             limit: pageSize * 1,
-            include: { model: Goods, as: 'goods_info', attributes: ['id', 'goods_name', 'goods_price', 'goods_num','goods_image'] }
+            include: { model: Goods, as: 'goods_info', attributes: ['id', 'goods_name', 'goods_price', 'goods_num', 'goods_image'] }
         })
         return {
             pageNumber,
@@ -57,7 +57,22 @@ class CartService {
             list: rows
         }
     }
-    
+
+    async updateCarts(paramer) {
+        const { id, number, select } = paramer
+        const res = await Carts.findByPk(id)
+        console.log('updateCarts', res)
+        // if (!res) { 
+        //     // 没有找到
+        //     return ''
+        // }
+        if (!res) return ''
+        number !== undefined ? (res.number = number) : ''
+        select !== undefined ? (res.select = select) : ''
+        return await res.save()
+
+    }
+
 
 }
 module.exports = new CartService()

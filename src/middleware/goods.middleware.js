@@ -1,7 +1,7 @@
 const parameter = require('koa-parameter');
 const { goodsFormatError, hasGoodsExited, createGoodsFail } = require("../constant/err.type")
 const { GetGoodsInfo }= require("../service/goods.service")
-// 校验参数是否为空
+// 校验参数是否为空 
 const validator = async (ctx, next) => {
     try {
         ctx.verifyParams({

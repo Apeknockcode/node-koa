@@ -47,19 +47,18 @@ class CartController {
     async update(ctx) {
         // 解析参数
         const { id } = ctx.request.params
-        const { number } = ctx.request.body
+        const { number, select } = ctx.request.body
         if (number === undefined && select === undefined) {
             cartFormatError.message = "number 和 select 不能为空"
-
             return ctx.app.emit("error", cartFormatError, ctx)
         }
         // 操作数据库
-        const res = await updateCarts({ id, number, select })
+        const { res } = await updateCarts({ id, number, select })
         // 返回查询结果
         ctx.body = {
             code: 0,
             message: "更新购物车",
-            result:''
+            result: res
         }
     }
 }

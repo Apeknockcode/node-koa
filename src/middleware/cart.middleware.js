@@ -1,19 +1,14 @@
 const { InvalidID, cartFormatError } = require('../constant/err.type')
 const { goodsLegality } = require('../service/cart.service')
+// 校验多个规则
 const validator = (rules) => {
     return async (ctx, next) => {
         try {
-            ctx.verifyParams(
-                // {
-                //     goods_id: { type: "number", require: true },
-                // }
-                rules
-            )
+            ctx.verifyParams(rules)
         } catch (error) {
             console.error(error);
             InvalidID.result = error
             return ctx.app.emit("error", cartFormatError, ctx)
-
         }
         await next()
     }
