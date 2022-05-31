@@ -1,4 +1,6 @@
-const { createOrUpdate } = require('../service/cart.service')
+
+const { createOrUpdate, findCarts, updateCarts } = require('../service/cart.service')
+const { cartFormatError } = require('../constant/err.type')
 class CartController {
     async add(ctx) {
         // 添加到购物车
@@ -23,6 +25,42 @@ class CartController {
 
 
 
+    }
+    async findAll(ctx) {
+        // 解析请求参数
+        const { pageNumber = 1, pageSize = 10 } = ctx.request.params
+
+        // 数据库查询
+        const res = await findCarts(pageNumber, pageSize)
+
+        // 返回查询结果
+        ctx.body = {
+            code: 0,
+            message: '获取购物车列表成功',
+            result: res
+        }
+
+
+
+    }
+
+    async update(ctx) {
+        // 解析参数
+        const { id } = ctx.request.params
+        const { number } = ctx.request.body
+        if (number === undefined && select === undefined) {
+            cartFormatError.message = "number 和 select 不能为空"
+
+            return ctx.app.emit("error", cartFormatError, ctx)
+        }
+        // 操作数据库
+        const res = await updateCarts({ id, number, select })
+        // 返回查询结果
+        ctx.body = {
+            code: 0,
+            message: "更新购物车",
+            result:''
+        }
     }
 }
 module.exports = new CartController()

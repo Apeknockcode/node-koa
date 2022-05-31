@@ -1,6 +1,6 @@
 const Carts = require("../mode/cart.model")
-const Goods= require("../mode/goods.model")
-const { Op, where } = require("sequelize")
+const Goods = require("../mode/goods.model")
+const { Op } = require("sequelize")
 class CartService {
     async createOrUpdate(user_id, goods_id) {
         // 数据的操作逻辑
@@ -14,7 +14,7 @@ class CartService {
                 }
             }
         })
-        
+
         if (res) {
             // 已经存在一条记录 通过 increment 和  decrement 来实现 商品的递增和递减整数值
             await res.increment('number')
@@ -30,16 +30,34 @@ class CartService {
     }
 
     // 判断添加的商品 是否 合法
-    async goodsLegality(id) { 
+    async goodsLegality(id) {
         const whereOpt = {}
         id && Object.assign(whereOpt, id)
         console.log('whereOpt', whereOpt)
         const res = await Goods.findOne({
             attributes: ['id', 'goods_name', 'goods_image'],
-            where:whereOpt
+            where: whereOpt
         })
         return res ? res.dataValues : null
     }
+
+    // 查询购物车列表
+    async findCarts(pageNumber, pageSize) {
+        let offset = (pageNumber - 1) * pageSize
+        const { count, rows } = await Carts.findAndCountAll({
+            attributes: ['id', "number", "select"],
+            offset: offset,
+            limit: pageSize * 1,
+            include: { model: Goods, as: 'goods_info', attributes: ['id', 'goods_name', 'goods_price', 'goods_num','goods_image'] }
+        })
+        return {
+            pageNumber,
+            pageSize,
+            total: count,
+            list: rows
+        }
+    }
     
+
 }
 module.exports = new CartService()

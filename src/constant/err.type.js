@@ -95,5 +95,10 @@ module.exports = {
         code: "10307",
         message: "商品id无效",
         result:""
+    },
+    cartFormatError: {
+        code: '10301',
+        message: "数据格式不正确",
+        result:''
     }
 }

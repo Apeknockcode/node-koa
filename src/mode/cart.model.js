@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../MySQL/seq")
-
+const Goods = require("../mode/goods.model")
 // 定义模型
 const Carts = sequelize.define("koa_carts", {
     goods_id: {
@@ -21,12 +21,17 @@ const Carts = sequelize.define("koa_carts", {
     },
     select: {
         type: DataTypes.INTEGER,
-        defaultValue:1,
+        defaultValue: 1,
         allowNull: false,
         comment: "选中的状态 0 没有选中， 1 选中"
     },
 }, {
     timestamps: true,
+})
+// 关联表的数据
+Carts.belongsTo(Goods, {
+    foreignKey: "goods_id",
+    as: "goods_info"
 })
 // 同步数据 （建表） 第一次需要执行
 // Carts.sync({ force: true })
