@@ -1,6 +1,6 @@
 
-const { createOrUpdate, findCarts, updateCarts } = require('../service/cart.service')
-const { cartFormatError } = require('../constant/err.type')
+const { createOrUpdate, findCarts, updateCarts, removeCarts, selectAllCarts, getTotal } = require('../service/cart.service')
+const { cartFormatError, InvalidID } = require('../constant/err.type')
 class CartController {
     async add(ctx) {
         // 添加到购物车
@@ -61,5 +61,57 @@ class CartController {
             result: res
         }
     }
+
+    async remove(ctx) {
+        const { ids } = ctx.request.body
+        console.log("id", ids)
+        const res = await removeCarts(ids)
+        if (res) {
+            ctx.body = {
+                code: 0,
+                message: "删除成功",
+                result: res
+            }
+        } else {
+            console.error('删除失败')
+            return ctx.app.emit('error', InvalidID, ctx)
+        }
+
+    }
+
+    async selectAll(ctx) {
+        // 获取用户的user_id下面的商品
+        const user_id = ctx.state.user.id
+        // 操作数据库
+        const res = await selectAllCarts(user_id, 1)
+        // 返回数据结果
+        ctx.body = {
+            code: 0,
+            message: "全部选中",
+            result: res
+        }
+    }
+    async unSelectAll(ctx) {
+        // 获取用户的user_id下面的商品
+        const user_id = ctx.state.user.id
+        // 操作数据库
+        const res = await selectAllCarts(user_id, 0)
+        // 返回数据结果
+        ctx.body = {
+            code: 0,
+            message: "全部取消选中",
+            result: res
+        }
+    }
+    async total(ctx) { 
+        const total = await getTotal()
+        ctx.body = {
+            code: 0,
+            message: "获取成功",
+            result:total
+        }
+
+    }
+
 }
 module.exports = new CartController()

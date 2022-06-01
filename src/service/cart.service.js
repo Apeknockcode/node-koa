@@ -61,7 +61,6 @@ class CartService {
     async updateCarts(paramer) {
         const { id, number, select } = paramer
         const res = await Carts.findByPk(id)
-        console.log('updateCarts', res)
         // if (!res) { 
         //     // 没有找到
         //     return ''
@@ -71,6 +70,29 @@ class CartService {
         select !== undefined ? (res.select = select) : ''
         return await res.save()
 
+    }
+
+    async removeCarts(ids) {
+        //  批量删除
+        return await Carts.destroy({
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        })
+    }
+
+    async selectAllCarts(user_id,state) {
+        //更新数据库
+        return await Carts.update({ select: state }, {
+            where: {
+                user_id
+            }
+        })
+    }
+    async getTotal() { 
+         return  await Carts.count()
     }
 
 

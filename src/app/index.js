@@ -6,7 +6,7 @@ const Koastatic = require("koa-static")
 const parameter = require('koa-parameter');
 // const userRouter = require("../router/user.route")
 // const goodsRouter= require('../router/goods.route')
-const router= require("../router/index")
+const router = require("../router/index")
 const errHandler = require('./errHandler')
 const app = new Koa()
 
@@ -14,11 +14,12 @@ app.use(KoaBody({
     multipart: true,
     formidable: {
         //在配置选项中 不推荐使用相对路径,推荐使用绝对路径
-        uploadDir: path.join(__dirname,"../uploads"),
-        keepExtensions:true,
-    }
+        uploadDir: path.join(__dirname, "../uploads"),
+        keepExtensions: true,
+    },
+    // parsedMethods { String[]} Declares the HTTP methods where bodies will be parsed, default ['POST', 'PUT', 'PATCH'].Replaces strict option.
+    parsedMethods: ["POST", "PUT", "PATCH", "DELETE"]
 }))
-
 app.use(Koastatic(path.join(__dirname, "../uploads")))
 app.use(parameter(app));
 
