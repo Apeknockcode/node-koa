@@ -56,3 +56,5 @@ class GoodsService {
     }
 }
 module.exports = new GoodsService()
+
+

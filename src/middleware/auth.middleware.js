@@ -10,6 +10,7 @@ const auth = async (ctx, next) => {
     try {
         //  user 包含 payload的信息
         const user = jwt.verify(token, JWT_SECRET)
+        // 赋值用户信息
         ctx.state.user = user
     } catch (error) {
         switch (error.name) {

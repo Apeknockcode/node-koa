@@ -89,16 +89,41 @@ module.exports = {
     removeGoodsState: {
         code: "10306",
         message: '删除商品失败',
-        result:''
+        result: ''
     },
     InvalidID: {
         code: "10307",
         message: "商品id无效",
-        result:""
+        result: ""
     },
     cartFormatError: {
         code: '10301',
         message: "数据格式不正确",
-        result:''
+        result: ''
+    },
+    addrFormatError: {
+        code: '10401',
+        message: "数据格式不正确",
+        result: ''
+    },
+    craeteFaile: {
+        code: 10402,
+        message: '添加地址失败',
+        result: ''
+    },
+    getAddressListFail: {
+        code: 10402,
+        message: '获取地址列表失败',
+        result: ''
+    },
+    upDateFail: {
+        code: 10403,
+        message: "数据更新失败",
+        result: ''
+    },
+    removeFails: {
+        code: 10404,
+        message: '删除失败',
+        result: ''
     }
 }
